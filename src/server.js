@@ -1,27 +1,20 @@
 'use strict';
 
 const net = require('net');
+const User = require('./user.js');
 
-const connections = [];
-
-const broadcast = function (sender, message) {
-    connections.forEach(function (connection) {
-        if (sender === connection) return;
-        connection.write(message);
-    });
-};
+const users = [];
 
 const server = net.createServer(function (connection) {
+    let user = new User('anonymous', connection);
+
+    users.push(user);
     console.log('New client connected...');
-    connections.push(connection);
 
     connection.on('data', function (message) {
-        // ProtocolHandler(data)
-        broadcast(connection, message);
     });
 
     connection.on('end', function () {
-        connections.splice(connections.indexOf(connection), 1);
         console.log('A client has disconnected...');
     });
 });
