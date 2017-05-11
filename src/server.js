@@ -18,6 +18,11 @@ const server = net.createServer(function (connection) {
     connection.on('data', function (message) {
         broadcast(connection, message);
     });
+
+    connection.on('end', function () {
+        connections.splice(connections.indexOf(connection), 1);
+        console.log('A client has disconnected...');
+    });
 });
 
 server.listen(3000);
