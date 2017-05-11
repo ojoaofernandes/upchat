@@ -11,3 +11,10 @@ client.on('connect', function () {
 client.on('data', function (message) {
     console.log(message.toString());
 });
+
+process.stdin.on('readable', function () {
+    let message = process.stdin.read();
+    if (!message) return;
+    message = message.toString().trim();
+    client.write(message);
+});
