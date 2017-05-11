@@ -5,7 +5,7 @@ const net = require('net');
 const client = net.connect(3000);
 
 client.on('connect', function () {
-    client.write('New client connected...');
+    console.log('Connection established with the server...');
 });
 
 client.on('data', function (message) {
