@@ -16,6 +16,7 @@ const server = net.createServer(function (connection) {
     connections.push(connection);
 
     connection.on('data', function (message) {
+        // ProtocolHandler(data)
         broadcast(connection, message);
     });
 

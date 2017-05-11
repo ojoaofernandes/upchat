@@ -2,18 +2,25 @@
 
 A simple chat developed with NodeJS for Distributed Systems discipline at the Faculty of Engineering of the University of Porto.
 
-#Protocol Especification
+## Protocol Specification
 
-<Message Type> <ReceiverID> <CLRF> <Body>
+### Header
+
+```
+<MessageType> <ReceiverID> <CLRF> <Body>
 
 Message Type --> String with the message type
-examples: NORMAL_MESSAGE, LOGIN, LOGOUT, FRIENDS_REQUEST, 
+examples: NORMAL_MESSAGE, LOGIN, LOGOUT, FRIENDS_REQUEST,
 
 Receiver --> String
 examples: nickname
+```
 
+### Body
+
+```
 Body --> string with the message
-
+```
 
 ## Authors
 
