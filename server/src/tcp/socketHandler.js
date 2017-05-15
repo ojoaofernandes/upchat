@@ -2,6 +2,7 @@
 
 const lists = require('./lists.js');
 const users = require('./users.js');
+const protocol = require('./protocolHandler.js');
 
 const userLists = {
     status: {
@@ -17,7 +18,8 @@ const socketHandler = function (socket) {
     userLists[user.status].register(user);
     console.log(`The socket ${user.id} connected...`);
 
-    user.socket.on('data', function () {
+    user.socket.on('data', function (message) {
+        protocol.handle(message);
     });
 
     user.socket.on('end', function () {
