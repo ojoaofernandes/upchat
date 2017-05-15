@@ -2,8 +2,9 @@
 
 const net = require('net');
 const User = require('./user.js');
+const client = require('./client.js');
 
-const users = [];
+const clients = clientHandler.createList();
 
 const broadcast = function(from, message) {
     users.forEach(function (user) {
