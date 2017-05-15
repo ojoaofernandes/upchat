@@ -2,9 +2,8 @@
 
 const net = require('net');
 const User = require('./user.js');
-const client = require('./client.js');
 
-const clients = clientHandler.createList();
+const clients = [];
 
 const broadcast = function(from, message) {
     users.forEach(function (user) {
@@ -31,7 +30,7 @@ const changeUsername = function (from, newUsername) {
     }).shift();
 
     user.username = newUsername;
-}
+};
 
 const server = net.createServer(function (connection) {
     let user = new User('anonymous', connection);

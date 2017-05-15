@@ -1,13 +1,12 @@
 'use strict';
 
 const net = require('net');
+const socketHandler = require('./socketHandler.js');
 
-const server = net.createServer(function (socket) {
-    socket.end('goodbye\n');
-});
+const netServer = net.createServer(socketHandler);
 
-const serverRunner = {
-    run: function (options) {
+const server = {
+    run(options) {
         const callback = function () {
             console.log('TCP Server is up and listening on'
                 , options.host + ':' + options.port
@@ -15,8 +14,8 @@ const serverRunner = {
             );
         };
 
-        server.listen(options, callback);
+        netServer.listen(options, callback);
     }
 };
 
-module.exports = serverRunner;
+module.exports = server;

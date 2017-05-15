@@ -2,7 +2,7 @@
 
 const net = require('net');
 
-const client = net.connect(3000);
+const client = net.connect(5511);
 
 client.on('connect', function () {
     console.log('Connection established with the server...');
