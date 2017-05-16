@@ -1,9 +1,11 @@
 'use strict';
 
+const handle = function(message) {
+    // add rules
+};
+
 const protocolHandler = {
-    handle(message) {
-        console.log(message.toString());
-    },
+    handle
 };
 
 module.exports = protocolHandler;

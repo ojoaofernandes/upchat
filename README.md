@@ -20,7 +20,7 @@ The protocol used by the chat service comprises some smaller subprotocols which 
 
 **Message format:**
 ```
-HEADER CLRF CLRF BODY
+HEADER CRLF CRLF BODY
 ```
 
 ### Authentication Protocol
