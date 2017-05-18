@@ -22,13 +22,13 @@ const splitHeaderFromBody = function (str) {
     return {header, body};
 };
 
-const newProtocolMessage = function ({from, header, body}) {
-    return {from, header, body};
+const newProtocolMessage = function ({sender, header, body}) {
+    return {sender, header, body};
 }
 
-const parse = function (buffer, from) {
+const parse = function (buffer, sender) {
     const {header, body} = splitHeaderFromBody(buffer.toString());
-    const message = newProtocolMessage({from, header, body});
+    const message = newProtocolMessage({sender, header, body});
     message.raw = buffer.toString();
 
     return message;
@@ -37,7 +37,7 @@ const parse = function (buffer, from) {
 const inspect = function (message) {
     console.log('\n');
     console.log(`New message ${new Date()}`);
-    console.log(`\tfrom:\t${message.from.id}`);
+    console.log(`\tsender:\t${message.sender.id}`);
     console.log(`\traw:\t${message.raw}`);
     console.log(`\theader:\t${message.header.raw}`);
     console.log(`\tbody:\t${message.body}`);
