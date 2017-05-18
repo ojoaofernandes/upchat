@@ -1,7 +1,7 @@
 'use strict';
 
 const handle = function(message) {
-    // add rules
+    // rules
 };
 
 const protocolHandler = {

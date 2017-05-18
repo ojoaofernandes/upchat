@@ -66,7 +66,7 @@ HEADER
 LOGIN_SUCCESS <some client identifier>
 
 BODY
-<clients` informations>
+<client informations>
 ```
 
 #### LOGIN_ERROR
@@ -81,6 +81,20 @@ LOGIN_ERROR <some client identifier>
 
 BODY
 -
+```
+
+#### WELCOME
+
+* Sender:   TCP Server
+* Receiver: Client
+
+**Message format:**
+```
+HEADER
+WELCOME
+
+BODY
+<client informations>
 ```
 
 #### LOGOUT
