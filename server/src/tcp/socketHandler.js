@@ -14,15 +14,21 @@ const userLists = {
     online: lists.createList(),
 };
 
-const socketHandler = function (socket) {
+const receiveSocket = function (socket) {
     const user = users.createUser({socket, status: userLists.status.anonymous});
-    userLists[user.status].register(user);
+    userLists[user.status].add(user);
     console.log(`Socket ${user.id} connected`);
+
+    return user;
+};
+
+const socketHandler = function (socket) {
+    const user = receiveSocket(socket);
 
     user.socket.on('data', function (buffer) {
         const message = protocolMessages.parse(buffer, user);
         protocolMessages.inspect(message);
-        protocol.handle(message);
+        protocol.handle(message, userLists);
     });
 
     user.socket.on('end', function () {

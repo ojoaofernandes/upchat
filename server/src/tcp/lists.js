@@ -3,7 +3,7 @@
 const newList = function () {
     const list = [];
 
-    const register = function (item) {
+    const add = function (item) {
         list[item.id] = item;
     };
 
@@ -13,7 +13,7 @@ const newList = function () {
 
     return {
         list,
-        register,
+        add,
         remove
     };
 };

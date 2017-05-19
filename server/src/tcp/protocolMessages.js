@@ -22,14 +22,15 @@ const splitHeaderFromBody = function (str) {
     return {header, body};
 };
 
-const newProtocolMessage = function ({sender, header, body}) {
-    return {sender, header, body};
-}
-
 const parse = function (buffer, sender) {
     const {header, body} = splitHeaderFromBody(buffer.toString());
-    const message = newProtocolMessage({sender, header, body});
-    message.raw = buffer.toString();
+
+    const message = {
+        sender,
+        header,
+        body,
+        raw: buffer.toString()
+    };
 
     return message;
 };
@@ -45,7 +46,8 @@ const inspect = function (message) {
 }
 
 const protocolMessages = {
-    parse, inspect
+    parse,
+    inspect
 };
 
 module.exports = protocolMessages;

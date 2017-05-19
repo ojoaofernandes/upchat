@@ -14,7 +14,7 @@ const newUser = function ({socket, status}) {
 
 const users = {
     createUser({socket, status}) {
-        return newUser(arguments[0]);
+        return newUser({socket, status});
     }
 };
 

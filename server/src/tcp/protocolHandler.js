@@ -1,21 +1,22 @@
 'use strict';
 
-const handle = function(message) {
-    if (message.sender.status === 'anonymous') {
-        if (message.header.protocol === 'LOGIN_REQUEST') {
-            if (message.header.params[0] === 'facebook') {
-                message.sender.socket.write('url do facebook');
-                return;
-            }
-            if (message.header.params[0] === 'twitter') {
-                message.sender.socket.write('url do twitter');
-                return;
-            }
+const LOGIN_REQUEST = function (message) {
+    if (message.header.params[0] === 'facebook') {
+        message.sender.socket.write('url do facebook');
+        return;
+    }
 
-            message.sender.socket.write('Invalid LOGIN_REQUEST parameter.');
+    message.sender.socket.write('Invalid LOGIN_REQUEST parameter.');
+}
+
+const handle = function(message, userLists) {
+    if (message.sender.status === userLists.status.anonymous) {
+        if (message.header.protocol === 'LOGIN_REQUEST') {
+            LOGIN_REQUEST(message);
+            return;
         }
 
-        message.sender.socket.write('Invalid message for an anonymous client.');
+        message.sender.socket.write('Invalid message.');
         return;
     }
 };
