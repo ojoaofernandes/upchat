@@ -1,6 +1,10 @@
 /**
  * Created by ei10117 on 11/05/2017.
  */
+import chatScreen.PanelUsers;
+import data.Friend;
+import data.User;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -19,6 +23,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class MainGUI {
 
@@ -30,6 +36,35 @@ public class MainGUI {
     JTextArea   chatBox;
     JTextField  usernameChooser;
     JFrame      preFrame;
+    PanelUsers panelUsers;
+    User user;
+    Friend active;
+
+    public MainGUI() {
+        user = new User("Anonimo");
+        panelUsers= new PanelUsers();
+        user.addFriends();
+        panelUsers.refresh(user.getFriends());
+        selectFriend();
+    }
+
+    public void selectFriend(){
+        panelUsers.getCountryList().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                if(!e.getValueIsAdjusting()) {
+                    final int selectedIndex = panelUsers.getCountryList().getSelectedIndex();
+                    active = user.getFriends().get(selectedIndex);
+                    chatBox.setText("");
+                    for(int i=0; i < active.getMensagens().size(); i++)
+                    {
+                        chatBox.append(active.mensagens.get(i));
+                    }
+                }
+            }
+        });
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -41,6 +76,7 @@ public class MainGUI {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 MainGUI mainGUI = new MainGUI();
                 mainGUI.preDisplay();
             }
@@ -50,6 +86,8 @@ public class MainGUI {
     public void preDisplay() {
         newFrame.setVisible(false);
         preFrame = new JFrame(appName);
+
+
         usernameChooser = new JTextField(15);
         JLabel chooseUsernameLabel = new JLabel("Pick a username:");
         JButton enterServer = new JButton("Enter Chat Server");
@@ -78,6 +116,10 @@ public class MainGUI {
     public void display() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+
+
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new BorderLayout());
 
         JPanel southPanel = new JPanel();
         southPanel.setBackground(Color.BLUE);
@@ -112,11 +154,15 @@ public class MainGUI {
         southPanel.add(messageBox, left);
         southPanel.add(sendMessage, right);
 
-        mainPanel.add(BorderLayout.SOUTH, southPanel);
+
+
+
+        mainPanel.add(BorderLayout.WEST,panelUsers.getAreaScrollPane());
+        mainPanel.add(BorderLayout.SOUTH,southPanel);
 
         newFrame.add(mainPanel);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        newFrame.setSize(470, 300);
+        newFrame.setSize(700, 600);
         newFrame.setVisible(true);
     }
 
@@ -130,7 +176,13 @@ public class MainGUI {
             } else {
                 chatBox.append("<" + username + ">:  " + messageBox.getText()
                         + "\n");
+                String str = "<" + username + ">:  " + messageBox.getText()
+                        + "\n";
+
+                active.getMensagens().add(str);
                 messageBox.setText("");
+
+
             }
             messageBox.requestFocusInWindow();
         }
@@ -145,9 +197,13 @@ public class MainGUI {
                 System.out.println("No!");
             } else {
                 preFrame.setVisible(false);
+
                 display();
             }
         }
 
     }
+
+
+
 }
