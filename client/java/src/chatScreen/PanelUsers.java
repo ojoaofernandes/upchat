@@ -1,37 +1,43 @@
 package chatScreen;
 
+import data.Friend;
+
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by ei10117 on 19/05/2017.
  */
 public class PanelUsers {
     private JList<String> countryList;
-    public JScrollPane areaScrollPane;
 
+    public JScrollPane areaScrollPane;
+    public DefaultListModel<String> listModel;
     public PanelUsers() {
 
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("USA");
-        listModel.addElement("India");
-        listModel.addElement("Vietnam");
-        listModel.addElement("Canada");
-        listModel.addElement("Denmark");
-        listModel.addElement("France");
-        listModel.addElement("Great Britain");
-        listModel.addElement("Japan");
-
+        listModel = new DefaultListModel<>();
         countryList = new JList<>(listModel);
-
-
         areaScrollPane = new JScrollPane(countryList);
         areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         areaScrollPane.setPreferredSize(new Dimension(125, 250));
+
+        countryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+
     }
 
-    public void changeText(String texto){
+    public void refresh(ArrayList<Friend> friends){
+       // listModel.clear();
+        for (Iterator<Friend> i = friends.iterator(); i.hasNext();) {
+            Friend friend = i.next();
+            listModel.addElement(friend.getName());
 
+            System.out.printf(friend.getName());
+        }
     }
 
     public JScrollPane getAreaScrollPane() {
@@ -41,40 +47,13 @@ public class PanelUsers {
     public void setAreaScrollPane(JScrollPane areaScrollPane) {
         this.areaScrollPane = areaScrollPane;
     }
+
+    public JList<String> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(JList<String> countryList) {
+        this.countryList = countryList;
+    }
 }
 
-/*
-public class PanelUsers extends JFrame {
-    private JList<String> countryList;
-    public PanelUsers() {
-        //create the model and add elements
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("USA");
-        listModel.addElement("India");
-        listModel.addElement("Vietnam");
-        listModel.addElement("Canada");
-        listModel.addElement("Denmark");
-        listModel.addElement("France");
-        listModel.addElement("Great Britain");
-        listModel.addElement("Japan");
-
-        //create the list
-        countryList = new JList<>(listModel);
-        add(countryList);
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("JList Example");
-        this.setSize(200,200);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new PanelUsers();
-            }
-        });
-    }
-}*/
