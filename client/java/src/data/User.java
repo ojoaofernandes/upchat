@@ -39,4 +39,24 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int friendExists(String name){
+        for (int i= 0;i < friends.size(); i++)
+        {
+            System.out.println(friends.get(i).getName() + " "+  (name));
+            if(friends.get(i).getName().equals(name))
+                return i;
+        }
+        return -1;
+    }
+
+
+    public void updateMessageBox(String name, String message){
+        int ret = friendExists(name);
+        System.out.println(ret);
+        if(ret != -1)
+            friends.get(ret).addMessage(message);;
+
+
+    }
 }

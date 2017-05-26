@@ -1,7 +1,6 @@
 package data;
 
 import java.util.LinkedList;
-import java.util.Stack;
 
 /**
  * Created by ei10117 on 25/05/2017.
@@ -9,11 +8,11 @@ import java.util.Stack;
 public class Friend {
 
     public String name;
-    public LinkedList<String> mensagens;
+    public LinkedList<String> messages;
 
     public Friend(String name) {
         this.name = name;
-        mensagens = new LinkedList<String>();
+        messages = new LinkedList<String>();
     }
 
     public String getName() {
@@ -24,11 +23,20 @@ public class Friend {
         this.name = name;
     }
 
-    public LinkedList<String> getMensagens() {
-        return mensagens;
+    public LinkedList<String> getMessages() {
+        return messages;
     }
 
-    public void setMensagens(LinkedList<String> mensagens) {
-        this.mensagens = mensagens;
+    public void setMessages(LinkedList<String> messages) {
+        this.messages = messages;
+    }
+
+    public void addMessage(String message){
+        messages.add(message);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

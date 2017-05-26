@@ -1,4 +1,4 @@
-/**
+package display; /**
  * Created by ei10117 on 11/05/2017.
  */
 import java.awt.*;
@@ -17,7 +17,7 @@ public class LoginDialog extends JDialog {
     private boolean succeeded;
 
     public LoginDialog(Frame parent) {
-        super(parent, "Login", true);
+        super(parent, "display.Login", true);
         //
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
@@ -49,7 +49,7 @@ public class LoginDialog extends JDialog {
         panel.add(pfPassword, cs);
         panel.setBorder(new LineBorder(Color.GRAY));
 
-        btnLogin = new JButton("Login");
+        btnLogin = new JButton("display.Login");
 
         btnLogin.addActionListener(new ActionListener() {
 
@@ -57,14 +57,14 @@ public class LoginDialog extends JDialog {
                 if (Login.authenticate(getUsername(), getPassword())) {
                     JOptionPane.showMessageDialog(LoginDialog.this,
                             "Hi " + getUsername() + "! You have successfully logged in.",
-                            "Login",
+                            "display.Login",
                             JOptionPane.INFORMATION_MESSAGE);
                     succeeded = true;
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginDialog.this,
                             "Invalid username or password",
-                            "Login",
+                            "display.Login",
                             JOptionPane.ERROR_MESSAGE);
                     // reset username and password
                     tfUsername.setText("");

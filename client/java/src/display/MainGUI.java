@@ -1,9 +1,9 @@
-/**
+package display; /**
  * Created by ei10117 on 11/05/2017.
  */
-import chatScreen.PanelUsers;
+import connection.ChatApp;
+import display.chatScreen.PanelUsers;
 import data.Friend;
-import data.User;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,8 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -37,15 +35,21 @@ public class MainGUI {
     JTextField  usernameChooser;
     JFrame      preFrame;
     PanelUsers panelUsers;
-    User user;
+
     Friend active;
 
     public MainGUI() {
-        user = new User("Anonimo");
+
+
+        chatBox = new JTextArea();
         panelUsers= new PanelUsers();
-        user.addFriends();
-        panelUsers.refresh(user.getFriends());
+
+        panelUsers.refresh(ChatApp.user.getFriends());
+        active = ChatApp.user.getFriends().get(1);
+        panelUsers.highlightUser(0);
         selectFriend();
+
+
     }
 
     public void selectFriend(){
@@ -55,33 +59,23 @@ public class MainGUI {
             {
                 if(!e.getValueIsAdjusting()) {
                     final int selectedIndex = panelUsers.getCountryList().getSelectedIndex();
-                    active = user.getFriends().get(selectedIndex);
-                    chatBox.setText("");
-                    for(int i=0; i < active.getMensagens().size(); i++)
-                    {
-                        chatBox.append(active.mensagens.get(i));
-                    }
+                    active = ChatApp.user.getFriends().get(selectedIndex);
+                    fillChatBox();
                 }
             }
         });
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager
-                            .getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                MainGUI mainGUI = new MainGUI();
-                mainGUI.preDisplay();
-            }
-        });
+    public void fillChatBox(){
+        chatBox.setText("");
+        for(int i = 0; i < active.getMessages().size(); i++)
+        {
+            chatBox.append(active.messages.get(i));
+        }
     }
+
+
+
 
     public void preDisplay() {
         newFrame.setVisible(false);
@@ -131,7 +125,7 @@ public class MainGUI {
         sendMessage = new JButton("Send Message");
         sendMessage.addActionListener(new sendMessageButtonListener());
 
-        chatBox = new JTextArea();
+
         chatBox.setEditable(false);
         chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
         chatBox.setLineWrap(true);
@@ -179,7 +173,7 @@ public class MainGUI {
                 String str = "<" + username + ">:  " + messageBox.getText()
                         + "\n";
 
-                active.getMensagens().add(str);
+                active.getMessages().add(str);
                 messageBox.setText("");
 
 

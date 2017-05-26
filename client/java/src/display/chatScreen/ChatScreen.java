@@ -1,4 +1,4 @@
-package chatScreen;
+package display.chatScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.*;
 public class ChatScreen {
 
     public static void main(String[] args) {
-        final JFrame frame = new JFrame("chatScreen.ChatScreen");
+        final JFrame frame = new JFrame("display.chatScreen.ChatScreen");
         final PanelUsers panelUsers= new PanelUsers();
 
 

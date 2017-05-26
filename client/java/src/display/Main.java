@@ -1,11 +1,10 @@
-/**
+package display; /**
  * Created by ei10117 on 11/05/2017.
  */
 import java.awt.*;
 import java.awt.event.*;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import javax.swing.*;
 
 public class Main {
