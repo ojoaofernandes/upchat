@@ -118,7 +118,19 @@ passport.use(new StrategyGoogle({
     callbackURL: "http://127.0.0.1:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    
+     console.log("\n\n\n************* token **********************************\n\n");
+    console.log(accessToken);
+    console.log("\n*************  profile **********************************\n");
+    console.log(profile);
+    console.log("\n*************  refreshToken *****************************\n");
+    console.log(refreshToken);
+    console.log("\n*************  name *************************************\n");
+    console.log(profile.displayName);
+ 	//console.log("\n*************  friends count ******************************\n");
+    //console.log(profile._json.friends_count);
+    //console.log("\n*************  description *****************************\n");
+   // console.log(profile._json.description);
+    console.log("\n*******************************************************\n\n\n");
       return cb(null, profile);
     }
 ));
