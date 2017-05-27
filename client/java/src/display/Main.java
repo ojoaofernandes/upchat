@@ -31,7 +31,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("https://www.facebook.com/"));
+                                desktop.browse(new URI("127.0.0.1/login/facebook"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }

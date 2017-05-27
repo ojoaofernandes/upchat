@@ -1,12 +1,7 @@
 package handlers;
 
 import connection.ChatApp;
-import messages.ParserHeader;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +34,13 @@ public class ReceiveHandler extends Thread {
             System.out.println(message);
             ChatApp.user.updateMessageBox(from,message);
         }
+        else if(type.equals("LOGOUT")){
+            //close gui
+        }
+        else if(type.equals("LOGIN_DESTINATION")){
+
+        }
+
 
     }
 }

@@ -4,6 +4,7 @@ package display; /**
 import connection.ChatApp;
 import display.chatScreen.PanelUsers;
 import data.Friend;
+import messages.Message;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,6 +14,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -174,8 +179,22 @@ public class MainGUI {
                         + "\n";
 
                 active.getMessages().add(str);
-                messageBox.setText("");
 
+
+                DataOutputStream outToServer = null;
+                try {
+                    outToServer = new DataOutputStream(ChatApp.socket.getOutputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    outToServer.writeBytes(Message.messageTo(active.name,messageBox.getText()) + '\n');
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                messageBox.setText("");
 
             }
             messageBox.requestFocusInWindow();

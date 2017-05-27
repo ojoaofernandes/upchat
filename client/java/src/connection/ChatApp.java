@@ -5,6 +5,7 @@ import display.MainGUI;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.Socket;
 
 
 /**
@@ -15,10 +16,12 @@ public class ChatApp {
     public MainGUI mainGUI;
     public ReceiverListener receiverListener;
     public static User user;
+    public static  Socket socket;
 
 
-    public ChatApp() {
+    public ChatApp() throws IOException {
         user = new User("Ruben");
+        this.socket = new Socket("localhost", 9090);
         user.addFriends();
         try {
             receiverListener = new ReceiverListener();
@@ -32,7 +35,7 @@ public class ChatApp {
         receiverListener.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ChatApp chatApp = new ChatApp();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
