@@ -75,6 +75,7 @@ passport.use(new StrategyTwitter({
     consumerSecret: 'uIcmi6i7vrqDiT4tQY2XIpAQ3E4XFZU9RmnddR9zervGQ4o1t1',
     callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
   },
+
   function(token, tokenSecret, profile, cb) {
     console.log("\n\n\n************* token **********************************\n\n");
     console.log(token);
