@@ -4,12 +4,27 @@ var StrategyFacebook = require('passport-facebook').Strategy;
 var StrategyTwitter = require('passport-twitter').Strategy;
 var StrategyGoogle = require('passport-google-oauth2').Strategy;
 
+var net = require('net');
+
 passport.use(new StrategyFacebook({
     clientID: '1945723129042657',
     clientSecret: '7669419a08d9efeb323b03f35977187a',
-    callbackURL: 'http://localhost:3000/login/facebook/return'
+    callbackURL: 'http://localhost:3000/login/facebook/return',
+    profileFields: ['id', 'emails', 'name', 'photos', 'hometown','friends']
   },
   function(accessToken, refreshToken, profile, cb) {
+
+    var client = new net.Socket();
+    client.connect(5570, '127.0.0.1', function() {
+    console.log('Connected');  // acknowledge socket connection
+    client.write("LOGIN_SUCCESS"+ " " + profile._json.first_name + " " + profile._json.last_name + " " + profile.emails[0].value); // send info to Server
+    });
+
+    client.on('close', function() {
+    console.log('Connection closed');
+    });
+
+
     console.log("\n************* token **********************************\n\n");
     console.log(accessToken);
     console.log("\n*************  profile *************************************\n");
@@ -18,6 +33,9 @@ passport.use(new StrategyFacebook({
     console.log(profile.displayName);
     console.log("\n*************  isd *************************************\n");
     console.log(profile.id);
+	console.log("\n*************  email *************************************\n");
+    console.log(profile.emails[0].value);
+
     console.log("\n******************************************************\n\n");
 
     return cb(null, profile);
@@ -55,7 +73,7 @@ app.get('/login',
   });
 
 app.get('/login/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', {scope: ['user_friends', 'email']}));
 
 app.get('/login/facebook/return', 
   passport.authenticate('facebook', { failureRedirect: '/login' }),
@@ -76,6 +94,19 @@ passport.use(new StrategyTwitter({
     callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
   },
   function(token, tokenSecret, profile, cb) {
+
+var client = new net.Socket();
+    client.connect(5570, '127.0.0.1', function() {
+    console.log('Connected');  // acknowledge socket connection
+    client.write("LOGIN_SUCCESS" +" " + profile.displayName+ " " + profile._json.friends_count); // send info to Server
+    });
+
+    
+    client.on('close', function() {
+    console.log('Connection closed');
+    });
+
+
     console.log("\n\n\n************* token **********************************\n\n");
     console.log(token);
     console.log("\n*************  profile **********************************\n");
@@ -118,6 +149,17 @@ passport.use(new StrategyGoogle({
     callbackURL: "http://127.0.0.1:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
+
+    var client = new net.Socket();
+    client.connect(5570, '127.0.0.1', function() {
+    console.log('Connected');  // acknowledge socket connection
+    client.write("LOGIN_SUCCESS"+ " " + profile.displayName + " " ); // send info to Server
+    });
+
+    
+    client.on('close', function() {
+    console.log('Connection closed');
+    });
      console.log("\n\n\n************* token **********************************\n\n");
     console.log(accessToken);
     console.log("\n*************  profile **********************************\n");
@@ -154,4 +196,6 @@ app.get('/auth/google/callback',
   });
 
 app.listen(3000);
+
+
 
