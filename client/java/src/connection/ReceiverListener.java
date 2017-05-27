@@ -18,9 +18,13 @@ class ReceiverListener extends Thread{
     }
 
     public ReceiverListener() throws IOException {
-        this.socket = new Socket("localhost", 9090);
+        this.socket = new Socket("localhost", 5570);
     }
 
+    public static void main(String[] args) throws IOException {
+        ReceiverListener receiverListener = new ReceiverListener();
+        receiverListener.start();
+    }
 
     @Override
     public void run() {

@@ -24,7 +24,7 @@ public class ReceiveHandler extends Thread {
 
         String type = fields[0];
 
-        System.out.println("typE:" +  type);
+      //  System.out.println("typE:" +  type);
 
         if(type.equals("MESSAGE_FROM")){
             String from = fields[1];
@@ -32,7 +32,7 @@ public class ReceiveHandler extends Thread {
             String message = "<" + from + ">:  " + body
                     + "\n";
             System.out.println(message);
-            ChatApp.user.updateMessageBox(from,message);
+           // ChatApp.user.updateMessageBox(from,message);
         }
         else if(type.equals("LOGOUT")){
             //close gui

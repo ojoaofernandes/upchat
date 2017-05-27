@@ -34,7 +34,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("127.0.0.1/login/facebook"));
+                                desktop.browse(new URI("http://127.0.0.1:3000/login/facebook"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }
@@ -48,7 +48,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("www.twitter.com"));
+                                desktop.browse(new URI("http://127.0.0.1:3000/login/twitter"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }
@@ -62,7 +62,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("www.google.com"));
+                                desktop.browse(new URI("http://127.0.0.1:3000/auth/google"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }

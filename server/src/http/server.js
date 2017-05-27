@@ -17,13 +17,19 @@ passport.use(new StrategyFacebook({
     var client = new net.Socket();
     client.connect(5570, '127.0.0.1', function() {
     console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS"+ " " + profile._json.first_name + " " + profile._json.last_name + " " + profile.emails[0].value); // send info to Server
+    client.write("LOGIN_SUCCESS" + " " + "facebook" + " " + profile._json.first_name + " " + profile._json.last_name + " " + profile.emails[0].value); // send info to Server
     });
 
     client.on('close', function() {
     console.log('Connection closed');
     });
+    client.on('end',function(){
+    console.log("Reading end");
+    });
 
+    client.on('error', function(err){
+    console.log("Error: "+err.message);
+    })
 
     console.log("\n************* token **********************************\n\n");
     console.log(accessToken);
@@ -98,13 +104,18 @@ passport.use(new StrategyTwitter({
 var client = new net.Socket();
     client.connect(5570, '127.0.0.1', function() {
     console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS" +" " + profile.displayName+ " " + profile._json.friends_count); // send info to Server
+    client.write("LOGIN_SUCCESS" + " " + "twitter" + " " + profile.displayName+ " " + profile._json.friends_count); // send info to Server
     });
-
-    
-    client.on('close', function() {
+   client.on('close', function() {
     console.log('Connection closed');
     });
+    client.on('end',function(){
+    console.log("Reading end");
+    });
+
+    client.on('error', function(err){
+    console.log("Error: "+err.message);
+    })
 
 
     console.log("\n\n\n************* token **********************************\n\n");
@@ -153,13 +164,20 @@ passport.use(new StrategyGoogle({
     var client = new net.Socket();
     client.connect(5570, '127.0.0.1', function() {
     console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS"+ " " + profile.displayName + " " ); // send info to Server
+    client.write("LOGIN_SUCCESS" + " " + "google" + " " + profile.displayName + " " ); // send info to Server
     });
 
-    
     client.on('close', function() {
     console.log('Connection closed');
     });
+    client.on('end',function(){
+    console.log("Reading end");
+    });
+
+    client.on('error', function(err){
+    console.log("Error: "+err.message);
+    })
+
      console.log("\n\n\n************* token **********************************\n\n");
     console.log(accessToken);
     console.log("\n*************  profile **********************************\n");
