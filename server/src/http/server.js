@@ -5,6 +5,7 @@ var StrategyTwitter = require('passport-twitter').Strategy;
 var StrategyGoogle = require('passport-google-oauth2').Strategy;
 
 var net = require('net');
+var client = new net.Socket();
 
 passport.use(new StrategyFacebook({
     clientID: '1945723129042657',
@@ -14,34 +15,47 @@ passport.use(new StrategyFacebook({
   },
   function(accessToken, refreshToken, profile, cb) {
 
-    var client = new net.Socket();
-    client.connect(5570, '127.0.0.1', function() {
-    console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS" + " " + "facebook" + " " + profile._json.first_name + " " + profile._json.last_name + " " + profile.emails[0].value); // send info to Server
-    });
+    if(profile != null){
 
-    client.on('close', function() {
-    console.log('Connection closed');
-    });
-    client.on('end',function(){
-    console.log("Reading end");
-    });
+        client.connect(5570, '127.0.0.1', function() {
+        console.log('Connected facebook login socket');  // acknowledge socket connection
+        client.write("LOGIN_SUCCESS" + " " + "facebook" + " " +
+         profile._json.first_name + " " + profile._json.last_name + " " + "\r\n\r\n" +
+          " " + profile.emails[0].value); // send info to Server
+        });
 
-    client.on('error', function(err){
-    console.log("Error: "+err.message);
-    })
+        client.on('close', function() {
+        console.log('Connection closed in facebook login');
+        });
+        client.on('end',function(){
+        console.log("Reading end in facebook login");
+        });
 
+        client.on('error', function(err){
+        console.log("Error facebook socket login: "+err.message);
+        });
+    }
+    else{
+        client.connect(5570, '127.0.0.1', function() {
+        console.log('Connected');  // acknowledge socket connection
+        client.write("LOGIN_ERROR" + " " + "facebook" + " " + "\r\n\r\n"); // send info to Server
+        });
+
+        client.on('close', function() {
+        console.log('Connection closed in facebook login error socket');
+        });
+        client.on('end',function(){
+        console.log("Reading end in facebook login error socket");
+        });
+
+        client.on('error', function(err){
+        console.log("Error in facebook login error socket: "+err.message);
+        });
+    }
     console.log("\n************* token **********************************\n\n");
     console.log(accessToken);
     console.log("\n*************  profile *************************************\n");
     console.log(profile);
-    console.log("\n*************  name *************************************\n");
-    console.log(profile.displayName);
-    console.log("\n*************  isd *************************************\n");
-    console.log(profile.id);
-	console.log("\n*************  email *************************************\n");
-    console.log(profile.emails[0].value);
-
     console.log("\n******************************************************\n\n");
 
     return cb(null, profile);
@@ -101,22 +115,38 @@ passport.use(new StrategyTwitter({
   },
   function(token, tokenSecret, profile, cb) {
 
-var client = new net.Socket();
-    client.connect(5570, '127.0.0.1', function() {
-    console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS" + " " + "twitter" + " " + profile.displayName+ " " + profile._json.friends_count); // send info to Server
-    });
-   client.on('close', function() {
-    console.log('Connection closed');
-    });
-    client.on('end',function(){
-    console.log("Reading end");
-    });
+    if(profile!=null){
+          client.connect(5570, '127.0.0.1', function() {
+          console.log('Connected');  // acknowledge socket connection
+          client.write("LOGIN_SUCCESS" + " " + "twitter" + " " + profile.displayName+ " " + "\r\n\r\n" +
+            " " + profile._json.friends_count); // send info to Server
+          });
+         client.on('close', function() {
+          console.log('Connection closed in twitter login socket ');
+          });
+          client.on('end',function(){
+          console.log("Reading end in twitter login socket");
+          });
 
-    client.on('error', function(err){
-    console.log("Error: "+err.message);
-    })
+          client.on('error', function(err){
+          console.log("Error in twitter login socket: "+err.message);
+          })
+      } else{
+          client.connect(5570, '127.0.0.1', function() {
+          console.log('Connected');  // acknowledge socket connection
+          client.write("LOGIN_ERROR" + " " + "twitter"); // send info to Server
+          });
+         client.on('close', function() {
+          console.log('Connection closed in twitter login error socket');
+          });
+          client.on('end',function(){
+          console.log("Reading end in twitter login error socket");
+          });
 
+          client.on('error', function(err){
+          console.log("Error in twitter login error socket: "+err.message);
+          });
+    }
 
     console.log("\n\n\n************* token **********************************\n\n");
     console.log(token);
@@ -124,12 +154,6 @@ var client = new net.Socket();
     console.log(profile);
     console.log("\n*************  token secret *****************************\n");
     console.log(tokenSecret);
-    console.log("\n*************  name *************************************\n");
-    console.log(profile.displayName);
- 	console.log("\n*************  friends count ******************************\n");
-    console.log(profile._json.friends_count);
-    console.log("\n*************  description *****************************\n");
-    console.log(profile._json.description);
     console.log("\n*******************************************************\n\n\n");
     return cb(null, profile);
   }));
@@ -161,39 +185,53 @@ passport.use(new StrategyGoogle({
   },
   function(accessToken, refreshToken, profile, cb) {
 
-    var client = new net.Socket();
+    if(profile != null){
     client.connect(5570, '127.0.0.1', function() {
     console.log('Connected');  // acknowledge socket connection
-    client.write("LOGIN_SUCCESS" + " " + "google" + " " + profile.displayName + " " ); // send info to Server
+    client.write("LOGIN_SUCCESS" + " " + "google" + " " + profile.displayName + " " +
+      "\r\n\r\n" + " "); // send info to Server
     });
 
     client.on('close', function() {
-    console.log('Connection closed');
+    console.log('Connection closed in google login socket');
     });
     client.on('end',function(){
-    console.log("Reading end");
+    console.log("Reading end in google login socket");
     });
 
     client.on('error', function(err){
-    console.log("Error: "+err.message);
+    console.log("Error in google login socket: "+err.message);
     })
 
+    }else {
+     
+      client.connect(5570, '127.0.0.1', function() {
+      console.log('Connected');  // acknowledge socket connection
+      client.write("LOGIN_ERROR" + " " + "google"); // send info to Server
+      });
+
+      client.on('close', function() {
+      console.log('Connection closed in google login error socket');
+      });
+      client.on('end',function(){
+      console.log("Reading end in google login error socket");
+      });
+
+      client.on('error', function(err){
+      console.log("Error in google login error socket: "+err.message);
+      });
+
+    }
+   
      console.log("\n\n\n************* token **********************************\n\n");
     console.log(accessToken);
     console.log("\n*************  profile **********************************\n");
     console.log(profile);
     console.log("\n*************  refreshToken *****************************\n");
     console.log(refreshToken);
-    console.log("\n*************  name *************************************\n");
-    console.log(profile.displayName);
- 	//console.log("\n*************  friends count ******************************\n");
-    //console.log(profile._json.friends_count);
-    //console.log("\n*************  description *****************************\n");
-   // console.log(profile._json.description);
     console.log("\n*******************************************************\n\n\n");
       return cb(null, profile);
-    }
-));
+  }));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
