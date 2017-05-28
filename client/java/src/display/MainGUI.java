@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionListener;
 
 public class MainGUI {
 
-    String      appName     = "Colt Chat v0.1";
+    String      appName;
     MainGUI     mainGUI;
     JFrame      newFrame    = new JFrame(appName);
     JButton     sendMessage;
@@ -50,12 +50,19 @@ public class MainGUI {
         panelUsers= new PanelUsers();
 
         panelUsers.refresh(ChatApp.user.getFriends());
-        active = ChatApp.user.getFriends().get(1);
-        panelUsers.highlightUser(0);
+
+
         selectFriend();
 
 
     }
+
+    public  void updatePanelUsers(){
+        panelUsers.refresh(ChatApp.user.getFriends());
+        if(ChatApp.user.getFriends().size() != 0)
+            active = ChatApp.user.getFriends().get(0);
+    }
+
 
     public void selectFriend(){
         panelUsers.getCountryList().addListSelectionListener(new ListSelectionListener() {
@@ -70,6 +77,8 @@ public class MainGUI {
             }
         });
     }
+
+
 
     public void fillChatBox(){
         chatBox.setText("");
@@ -164,6 +173,8 @@ public class MainGUI {
         newFrame.setSize(700, 600);
         newFrame.setVisible(true);
     }
+
+
 
     class sendMessageButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {

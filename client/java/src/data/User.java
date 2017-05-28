@@ -1,5 +1,7 @@
 package data;
 
+import connection.ChatApp;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,18 +13,37 @@ public class User {
     public ArrayList<Friend> friends ;
     public String name;
 
-    public User(String name) {
-        this.name = name;
+    public User() {
+
         friends = new ArrayList<>();
     }
 
-    public void addFriends()
+    public void addFriends(String[] list)
     {
-        friends.add(new Friend("Ruben"));
-        friends.add(new Friend("Ze"));
-        friends.add(new Friend("Sal"));
+        if(list != null) {
+            for (int i = 0; i < list.length; i++) {
+                friends.add(new Friend(list[i]));
+            }
+        }
+    }
+
+    public void updateFriends(String[] list)
+    {
+
+        if(list != null) {
+            ArrayList<Friend> aux =  new ArrayList<>();
+
+            for (int i = 0; i < list.length; i++) {
+                aux.add(new Friend(list[i]));
+            }
+            if(aux != friends)
+                friends = aux;
+            ChatApp.updateList();
+        }
 
     }
+
+
 
     public ArrayList<Friend> getFriends() {
         return friends;

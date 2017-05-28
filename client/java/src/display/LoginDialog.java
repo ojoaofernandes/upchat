@@ -1,6 +1,8 @@
 package display; /**
  * Created by ei10117 on 11/05/2017.
  */
+import connection.ChatApp;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -54,23 +56,39 @@ public class LoginDialog extends JDialog {
         btnLogin.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                if (Login.authenticate(getUsername(), getPassword())) {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Hi " + getUsername() + "! You have successfully logged in.",
-                            "display.Login",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    succeeded = true;
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Invalid username or password",
-                            "display.Login",
-                            JOptionPane.ERROR_MESSAGE);
-                    // reset username and password
-                    tfUsername.setText("");
-                    pfPassword.setText("");
-                    succeeded = false;
+                try {
+                    if (Login.authenticate(getUsername(), getPassword())) {
+                        JOptionPane.showMessageDialog(LoginDialog.this,
+                                "Hi " + getUsername() + "! You have successfully logged in.",
+                                "display.Login",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        succeeded = true;
 
+                        dispose();
+                        ChatApp.frame.setVisible(false);
+                        System.out.println(getUsername());
+
+                        ChatApp.user.setName(getUsername());
+                        ChatApp.mainGUI = new MainGUI();
+                        ChatApp.mainGUI.newFrame.setTitle(getUsername());
+                        System.out.println(ChatApp.user.getFriends().size());
+                        ChatApp.mainGUI.panelUsers.refresh(ChatApp.user.getFriends());
+                        ChatApp.mainGUI.preDisplay();
+                       // ChatApp.mainGUI.fillChatBox();
+
+                    } else {
+                        JOptionPane.showMessageDialog(LoginDialog.this,
+                                "Invalid username or password",
+                                "display.Login",
+                                JOptionPane.ERROR_MESSAGE);
+                        // reset username and password
+                        tfUsername.setText("");
+                        pfPassword.setText("");
+                        succeeded = false;
+
+                    }
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
                 }
             }
         });
@@ -104,4 +122,6 @@ public class LoginDialog extends JDialog {
     public boolean isSucceeded() {
         return succeeded;
     }
+
+
 }

@@ -1,31 +1,25 @@
 package display; /**
  * Created by ei10117 on 11/05/2017.
  */
+import connection.ChatApp;
+
 import java.awt.*;
 import java.awt.event.*;
 
+import java.io.IOException;
 import java.net.URI;
 import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        ChatApp chatApp = new ChatApp();
+        chatApp.runlistener();
         final JFrame frame = new JFrame("JDialog Demo");
         final JButton btnLogin = new JButton("Click to login");
         final JButton faceLogin = new JButton("Facebook");
         final JButton twitterLogin = new JButton("Twitter");
         final JButton googleLogin = new JButton("Google+");
 
-        btnLogin.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        LoginDialog loginDlg = new LoginDialog(frame);
-                        loginDlg.setVisible(true);
-                        // if logon successfully
-                        if(loginDlg.isSucceeded()){
-                            btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
-                        }
-                    }
-                });
 
 
         faceLogin.addActionListener(
@@ -34,7 +28,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("http://127.0.0.1:3000/login/facebook"));
+                                desktop.browse(new URI("127.0.0.1/login/facebook"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }
@@ -48,7 +42,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("http://127.0.0.1:3000/login/twitter"));
+                                desktop.browse(new URI("www.twitter.com"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }
@@ -62,7 +56,7 @@ public class Main {
                         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
                         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
                             try {
-                                desktop.browse(new URI("http://127.0.0.1:3000/auth/google"));
+                                desktop.browse(new URI("www.google.com"));
                             } catch (Exception exp) {
                                 exp.printStackTrace();
                             }

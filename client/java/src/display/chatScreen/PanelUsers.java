@@ -53,10 +53,6 @@ public class PanelUsers {
         this.listComponent = countryList;
     }
 
-    public void highlightUser(int index){
-        new FriendRenderer().getListCellRendererComponent(listComponent,friendsModel.elementAt(index),index,false,true);
 
-
-    }
 }
 
