@@ -97,6 +97,7 @@ This protocol specifies in detail the message exchange to be done between the tc
 HEADER
 LOGIN_REQUEST <username> <password>
 BODY
+-
 ```
 
 #### LOGIN_SUCCESS
@@ -121,23 +122,10 @@ BODY
 ```
 HEADER
 LOGIN_ERROR
+-
 
 BODY
 -
-```
-
-#### WELCOME
-
-* Sender:   TCP Server
-* Receiver: Client
-
-**Message format:**
-```
-HEADER
-WELCOME <client name>
-
-BODY
-<client informations>
 ```
 
 #### LOGOUT
@@ -149,6 +137,7 @@ BODY
 ```
 HEADER
 LOGOUT
+-
 
 BODY
 -
