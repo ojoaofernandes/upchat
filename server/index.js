@@ -1,14 +1,11 @@
 'use script';
 
 const tcpServer  = require('./src/tcp/server.js');
-//const httpServer = require('./src/http/server.js');
+
+const database = require('./src/tcp/database.js');
+database.restore();
 
 tcpServer.run({
-    host: 'localhost',
+    host: '192.168.108.180',
     port: 5570
 });
-
-/*httpServer.run({
-    host: 'localhost',
-    port: 5580
-});*/

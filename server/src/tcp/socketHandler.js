@@ -16,7 +16,7 @@ const userLists = {
 
 const receiveSocket = function (socket) {
     const user = users.createUser({socket, status: userLists.status.anonymous});
-    userLists[user.status].add(user);
+    userLists[user.status].add(user, 'id');
     console.log(`Socket ${user.id} connected`);
 
     return user;
@@ -31,8 +31,15 @@ const socketHandler = function (socket) {
         protocol.handle(message, userLists);
     });
 
+    user.socket.on('error', function () {
+        userLists[user.status].remove(user);
+        protocol.UPDATE_FRIENDS(userLists);
+        console.log(`Socket ${user.id} disconnected`);
+    });
+
     user.socket.on('end', function () {
         userLists[user.status].remove(user);
+        protocol.UPDATE_FRIENDS(userLists);
         console.log(`Socket ${user.id} disconnected`);
     });
 };

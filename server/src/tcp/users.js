@@ -7,6 +7,8 @@ const generateId = function (socket) {
 const newUser = function ({socket, status}) {
     return {
         id: generateId(socket),
+        username: 'anonymous',
+        password: 'anonymous',
         status,
         socket
     };
