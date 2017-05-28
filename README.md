@@ -23,7 +23,7 @@ The protocol used by the chat service comprises some smaller subprotocols which 
 HEADER CRLF CRLF BODY
 ```
 
-### Authentication Protocol
+### Authentication Protocol with facebbok, twitter and google
 
 This protocol specifies in detail the message exchange to be done between the tcp (main communication server) and http (server for login purposes) servers and the java application(client).
 
@@ -48,7 +48,7 @@ BODY
 **Message format:**
 ```
 HEADER
-LOGIN_SUCCESS <login type>
+LOGIN_ERROR <login type>
 
 BODY
 -
@@ -81,6 +81,69 @@ LOGOUT
 BODY
 -
 ```
+
+
+### Authentication Protocol
+
+This protocol specifies in detail the message exchange to be done between the tcp server (main communication server) and the java application(client).
+
+#### LOGIN_REQUEST
+
+* Sender:   Client
+* Receiver: TCP Server
+
+**Message format:**
+```
+HEADER
+LOGIN_REQUEST <username> <password>
+BODY
+-
+```
+
+#### LOGIN_SUCCESS
+
+* Sender:   TCP Server
+* Receiver: Client
+
+**Message format:**
+```
+HEADER
+LOGIN_SUCCESS 
+BODY
+<online_friends>
+```
+
+#### LOGIN_ERROR
+
+* Sender:   HTTP Server
+* Receiver: TCP Server
+
+**Message format:**
+```
+HEADER
+LOGIN_ERROR
+-
+
+BODY
+-
+```
+
+#### LOGOUT
+
+* Sender:   Client
+* Receiver: TCP Server
+
+**Message format:**
+```
+HEADER
+LOGOUT
+-
+
+BODY
+-
+```
+
+
 
 ### Account Operations Protocol
 
