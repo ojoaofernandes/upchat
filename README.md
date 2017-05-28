@@ -25,35 +25,7 @@ HEADER CRLF CRLF BODY
 
 ### Authentication Protocol
 
-Description.
-
-#### LOGIN_REQUEST
-
-* Sender:   Client
-* Receiver: TCP Server
-
-**Message format:**
-```
-HEADER
-LOGIN_REQUEST <third-party api name>
-
-BODY
--
-```
-
-#### LOGIN_DESTINATION
-
-* Sender:   TCP Server
-* Receiver: Client
-
-**Message format:**
-```
-HEADER
-LOGIN_DESTINATION <third-party api url>
-
-BODY
--
-```
+This protocol specifies in detail the message exchange to be done between the tcp (main communication server) and http (server for login purposes) servers and the java application(client).
 
 #### LOGIN_SUCCESS
 
@@ -63,8 +35,7 @@ BODY
 **Message format:**
 ```
 HEADER
-LOGIN_SUCCESS <some client identifier>
-
+LOGIN_SUCCESS <login type> <client name>
 BODY
 <client informations>
 ```
@@ -77,7 +48,7 @@ BODY
 **Message format:**
 ```
 HEADER
-LOGIN_ERROR <some client identifier>
+LOGIN_SUCCESS <login type>
 
 BODY
 -
@@ -91,7 +62,7 @@ BODY
 **Message format:**
 ```
 HEADER
-WELCOME
+WELCOME <client name>
 
 BODY
 <client informations>
