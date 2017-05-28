@@ -23,7 +23,7 @@ The protocol used by the chat service comprises some smaller subprotocols which 
 HEADER CRLF CRLF BODY
 ```
 
-### Authentication Protocol with facebbok, twitter and google
+### Authentication Protocol with facebook, twitter and google
 
 This protocol specifies in detail the message exchange to be done between the tcp (main communication server) and http (server for login purposes) servers and the java application(client).
 
@@ -49,34 +49,6 @@ BODY
 ```
 HEADER
 LOGIN_ERROR <login type>
-
-BODY
--
-```
-
-#### WELCOME
-
-* Sender:   TCP Server
-* Receiver: Client
-
-**Message format:**
-```
-HEADER
-WELCOME <client name>
-
-BODY
-<client informations>
-```
-
-#### LOGOUT
-
-* Sender:   Client
-* Receiver: TCP Server
-
-**Message format:**
-```
-HEADER
-LOGOUT
 
 BODY
 -
@@ -108,7 +80,7 @@ BODY
 **Message format:**
 ```
 HEADER
-LOGIN_SUCCESS 
+LOGIN_SUCCESS
 BODY
 <online_friends>
 ```
@@ -128,26 +100,18 @@ BODY
 -
 ```
 
-#### LOGOUT
+#### UPDATE_FRIENDS
 
-* Sender:   Client
-* Receiver: TCP Server
+* Sender:   TCP Server
+* Receiver: Client
 
 **Message format:**
 ```
 HEADER
-LOGOUT
--
-
+UPDATE_FRIENDS
 BODY
--
+<online friends>
 ```
-
-
-
-### Account Operations Protocol
-
-Description.
 
 ### Chatting Protocol
 
@@ -180,6 +144,20 @@ MESSAGE_FROM <friend`s username>
 BODY
 <message content>
 ```
+
+## Run
+
+* Install Node.js v6.10.3
+* Go to /path/to/upchat
+
+* Configure server/index.js
+    * Set tcpServer host IP:PORT
+* Run server/index.js
+
+* Configure client/java/src/connection/ChatApp
+    * Set Socket host IP:PORT
+* Run ChatApp
+
 
 ## Authors
 
